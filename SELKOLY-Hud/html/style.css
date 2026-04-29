@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.60);
+  --glass: rgba(255, 255, 255, 0.10);
+  --glass-strong: rgba(255, 255, 255, 0.16);
+  --health: #8eff5a;
+  --armor: #63efff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+  background: transparent;
+}
+
+.hud-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* CAN / ZIRH */
+.status-circles {
+  position: absolute;
+  left: 2vw;
+  bottom: 2vh;
+  display: flex;
+  gap: 10px;
+}
+
+/* TAM TEMİZ */
+.circle-wrap {
+  width: 70px;
+  height: 70px;
+  position: relative;
+}
+
+/* SVG */
+.progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+/* ARKA HALKA */
+.circle-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.08);
+  stroke-width: 4;
+}
+
+/* DOLU KISIM */
+.circle-progress {
+  fill: none;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-dasharray: 125.6;
+  stroke-dashoffset: 125.6;
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+/* RENKLER */
+.health-color {
+  stroke: var(--health);
+}
+
+.armor-color {
+  stroke: var(--armor);
+}
+
+/* ICON + TEXT */
+.circle-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* ICON */
+.status-icon {
+  width: 14px;
+  height: 14px;
+  opacity: 0.9;
+}
+
+.health-wrap .status-icon {
+  fill: var(--health);
+}
+
+.armor-wrap .status-icon {
+  fill: var(--armor);
+}
+
+/* TEXT */
+.val {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+
+/* ARAÇ HUD */
+.vehicle-box {
+  position: absolute;
+  right: 2.35vw;
+  bottom: 2.05vh;
+  width: 360px;   /* FIX: daha geniş alan */
+  height: 360px;  /* FIX */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible; /* FIX */
+}
+
+.vehicle-box.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.center-wrap {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(50px);
+}
+
+.speed {
+  font-size: 41px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -2px;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+  margin-top: 85px;
+  margin-left: 0px;
+}
+
+.unit {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  margin-top: -100px;
+}
+
+.bottom-info {
+  display: flex;
+  flex-direction: row-reverse; /* Bu satır içerideki ikonların sırasını görsel olarak tersine çevirir */
+  position: absolute;
+  left: 50%;
+  bottom: 200px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 2;
+}
+
+.status-pill {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-icon {
+  width: 22px;
+  height: 22px;
+  color: rgba(255, 255, 255, 0.28);
+  transition: color 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+}
+
+.status-pill.active .mini-icon {
+  transform: scale(1.06);
+}
+
+.gear-box {
+  position: absolute;
+  z-index: 2;
+  bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gear-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  margin-bottom: -50px;
+}
+
+.gear {
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  transition: opacity 0.22s ease, transform 0.22s ease, color 0.18s ease;
+}
+
+.vehicle-box.engine-off .speed,
+.vehicle-box.engine-off .gear,
+.vehicle-box.engine-off .unit {
+  opacity: 0.38;
+}
+
+.vehicle-box.engine-off .gear {
+  transform: scale(0.98);
+}
+
+@keyframes gearBlink {
+  0% { opacity: 1; }
+  100% { opacity: 0.3; transform: scale(1.08); }
+}
+
+.gear.blink {
+  animation: gearBlink 0.2s infinite alternate;
+}
+
+/* Mini Kadranların Genel Yapısı */
+.mini-gauge {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Turbo: Sağ Üst */
+.turbo-wrap {
+  top: -25px;
+  right: -15px;
+}
+
+/* Hız Kadranı: Sol Alt */
+.speed-dial-wrap {
+  bottom: -55px;   /* FIX: daha yukarı al */
+  left: 105px;     /* FIX: içe çek */
+  width: 150px;
+  height: 150px;
+}
+
+.mini-gauge canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  margin-top: 40px; /* Merkezin altına itmek için */
+  z-index: 6;
+}
+
+.mini-val {
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  z-index: 6;
+}
+
+canvas#rpmCanvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+}

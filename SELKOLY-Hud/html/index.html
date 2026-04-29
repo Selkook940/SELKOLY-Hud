@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern HUD</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="hudRoot" class="hud-root">
+
+    <div class="status-circles">
+  <div class="circle-wrap health-wrap">
+    <svg class="progress-svg" viewBox="0 0 50 50">
+      <defs>
+        <linearGradient id="healthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a8ff7a"></stop>
+          <stop offset="100%" stop-color="#59e84f"></stop>
+        </linearGradient>
+      </defs>
+      <circle class="circle-bg" cx="25" cy="25" r="20"></circle>
+      <circle id="healthCircle" class="circle-progress health-color" cx="25" cy="25" r="20"></circle>
+    </svg>
+    <div class="circle-content">
+      <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+      <span id="healthText" class="val">100</span>
+    </div>
+  </div>
+
+  <div class="circle-wrap armor-wrap">
+    <svg class="progress-svg" viewBox="0 0 50 50">
+      <defs>
+        <linearGradient id="armorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8bf1ff"></stop>
+          <stop offset="100%" stop-color="#2f9cff"></stop>
+        </linearGradient>
+      </defs>
+      <circle class="circle-bg" cx="25" cy="25" r="20"></circle>
+      <circle id="armorCircle" class="circle-progress armor-color" cx="25" cy="25" r="20"></circle>
+    </svg>
+    <div class="circle-content">
+      <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+      </svg>
+      <span id="armorText" class="val">0</span>
+    </div>
+  </div>
+</div>
+
+    <div id="vehicleBox" class="vehicle-box hidden">
+<canvas id="rpmCanvas" width="400" height="400"></canvas>
+
+  <div class="mini-gauge turbo-wrap">
+    <canvas id="turboCanvas" width="120" height="120"></canvas>
+    <div class="mini-label">PSI</div>
+    <div id="turboText" class="mini-val">0.0</div>
+  </div>
+
+  <div class="mini-gauge speed-dial-wrap">
+    <canvas id="speedDialCanvas" width="120" height="120"></canvas>
+    <div class="mini-label">KM/H</div>
+  </div>
+
+  <div class="center-wrap">
+    <div id="speedText" class="speed">0</div>
+    <div class="unit"></div>
+  </div>
+
+      <div class="gear-box">
+        <div class="gear-label">GEAR</div>
+        <div id="gearText" class="gear">N</div>
+      </div>
+
+            <div class="bottom-info">
+        <div id="handbrakeState" class="status-pill">
+          <svg id="handbrakeIcon" class="mini-icon" viewBox="0 0 24 24">
+             <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+          </svg>
+        </div>
+
+        <div id="engineState" class="status-pill">
+          <svg id="engineIcon" class="mini-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7 13v-2h6v2H7zm11.75-5.38a3 3 0 0 0-4.14-1L12 8.12l-2.61-1.5a3 3 0 0 0-4.14 1L4 10.12V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.88l-1.25-2.5z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-circles">
+      </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
